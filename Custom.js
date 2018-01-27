@@ -81,7 +81,7 @@ $("#videocontrols").removeClass("pull-right");
 
 
 
-$("#chatline").attr("placeholder","Type here to send a message");
+$("#chatline").attr("placeholder","Введите сообщение");
 
 //$('#pollwrap').detach().insertBefore($('#scroll-feature'));
 $("#motdwrap").append($(".visible-lg"));
