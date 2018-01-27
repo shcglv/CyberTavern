@@ -748,52 +748,59 @@ Callbacks.usercount = function(data) {//currently for debugging purposes only. D
 	$("#usercount").text($("#usercount").text().replace(/connected users?/,'пользователей подключено'));
 }
 
-API_PREFIXMESSAGE(function(data, last) {
-	if (!data.username) {
-		if (prevMsg && prevMsg.orig_username) {
-			data.username = prevMsg.orig_username;
-		}
-	}
-	data.orig_username = data.username;
-	prevMsg = data;
 
-	if (data.username) {
-		var ALLOWED_USERS = ['Joxit', 'PISKU_V_SHPROT'];
-		var TAGS = {
-			'rage': 'rage',
-			'2007': 'mostik',
-			'krac': 'krac'
-		};
 
-		var isAllowedUser = false;
-		for (var i = 0; i < ALLOWED_USERS.length; ++i) {
-			if (ALLOWED_USERS[i].toLowerCase() === data.username.toLowerCase()) {
-				isAllowedUser = true;
-				break;
-			}
-		}
 
-		if (isAllowedUser || true) {
-			for (var curTag in TAGS) {
-				if (!TAGS.hasOwnProperty(curTag)) continue;
 
-				var replacement = TAGS[curTag];
 
-				var r_full = new RegExp('^\\/' + curTag + ' ([\\s\\S]*)$', 'gi');
-				data.msg = data.msg.replace(r_full, '<div class="' + replacement + '">$1</div>');
 
-				var r_block = new RegExp('\\[' + curTag + '\\]([\\s\\S]*?)\\[\\/' + curTag + '\\]', 'gi');
-				data.msg = data.msg.replace(r_block, '<div class="' + replacement + '">$1</div>');
-			}
-		}
-	}
 
-	for (var i = 0; i < AVATARS.length; i++){
-		if(data && data.username && data.username.toUpperCase() == AVATARS[i].name.toUpperCase()){
-			data.username = '<img style="max-height: 50px" src="' + AVATARS[i].image + '" title="'+ AVATARS[i].name +'" class="ava">';
-		}
+
+
+
+
+
+STYLE = $Add('style', 'API_STYLE', '', '@body');
+STYLE.innerHTML += '.chat-image{max-width: 100px; max-height:100px; cursor: pointer;}';
+STYLE.innerHTML += '.smile, #plmeta{cursor: pointer;}';
+STYLE.innerHTML += '#help-btn, #image-btn, #smiles-btn{margin-right: 5px;}';
+STYLE.innerHTML += '#smiles-btn{cursor: pointer; position: absolute; font-size: 25px; right: 10px;}';
+STYLE.innerHTML += '#chatwrap{overflow: auto;}';
+STYLE.innerHTML += '#footer{bottom: 0; position: fixed; width: 100%; opacity: 0.9;}';
+
+// ÐžÐ±Ñ€Ð°Ð±Ð¾Ñ‚ÐºÐ° ÑÐ¾Ð¾Ð±Ñ‰ÐµÐ½Ð¸Ð¹ Ð¿ÐµÑ€ÐµÐ´ Ð¾Ð¿Ñ€Ð°Ð²ÐºÐ¾Ð¹
+API_PREFIXBEFORESEND(function(OBJ){
+	var msg = OBJ.value;
+	msg = msg.replace(/http:\/\/cdn\.syn-ch\.com\/thumb\/.*\/.*\/.*\/(.*?((\.jpg)|(\.jpeg)|(\.png)|(\.gif)))(\s|$|\/)/g, '$$is$1is$$');
+	msg = msg.replace(/http:\/\/cdn\.syn-ch\.com\/src\/.*\/.*\/.*\/(.*?((\.jpg)|(\.jpeg)|(\.png)|(\.gif)))(\s|$|\/)/g, '$$iS$1iS$$');
+	msg = msg.replace(/http:\/\/i.imgur.com\/(.*?)(\s|$)/g, '$$ii$1ii$$');
+	msg = msg.replace(/http:\/\/(.*?((\.jpg)|(\.jpeg)|(\.png)|(\.gif)))(\s|$)/g, '$$i1$1i1$$');
+	msg = msg.replace(/https:\/\/(.*?((\.jpg)|(\.jpeg)|(\.png)|(\.gif)))(\s|$)/g, '$$i2$1i2$$');
+	if(msg != OBJ.value){OBJ.value = msg;}
+});
+// ÐžÐ±Ñ€Ð°Ð±Ð¾Ñ‚ÐºÐ° Ð½Ð¾Ð²Ñ‹Ñ… ÑÐ¾Ð¾Ð±Ñ‰ÐµÐ½Ð¸Ð¹.
+API_PREFIXMESSAGE(function(data, last){
+	data.msg = data.msg.replace(/\$i1(.*?)i1\$/g, '<img class="chat-image" src="http://$1">');
+	data.msg = data.msg.replace(/\$i2(.*?)i2\$/g, '<img class="chat-image" src="https://$1">');
+	data.msg = data.msg.replace(/\$ii(.*?)ii\$/g, '<img class="chat-image" src="http://i.imgur.com/$1">');
+	data.msg = data.msg.replace(/\$is(.{3}?)(.{2}?)(.{2}?)(.*?)is\$/g, '<img class="chat-image" src="http://cdn.syn-ch.com/thumb/$1/$2/$3/$1$2$3$4">');
+	data.msg = data.msg.replace(/\$iS(.{3}?)(.{2}?)(.{2}?)(.*?)iS\$/g, '<img class="chat-image" src="http://cdn.syn-ch.com/src/$1/$2/$3/$1$2$3$4">');
+});
+// Ð¸Ð½Ð¸Ñ†Ð¸Ð°Ð»Ð¸Ð·Ð°Ñ†Ð¸Ñ ÑÐ¼Ð¾Ñ‚Ñ€ÐµÐ»ÐºÐ¸ ÐºÐ°Ñ€Ñ‚Ð¸Ð½Ð¾Ðº.
+API_IMAGEVIEWERINIT();
+// ÐžÐ±Ñ€Ð°Ð±Ð¾Ñ‚ÐºÐ° ÐºÐ»Ð¸ÐºÐ° Ð¿Ð¾ ÐºÐ»Ð°ÑÑÑƒ Ð¾Ð±ÑŠÐµÐºÑ‚Ð¾Ð².
+API_CLASSCLICKEVENTADD(function(TARGET, CLS){
+	if(CLS == 'chat-image'){
+		API_IMAGESHOW(TARGET.target.src, TARGET.target.naturalHeight, TARGET.target.naturalWidth);
 	}
 });
+// Ð¡Ð¼Ð°Ð¹Ð»Ð¸ÐºÐ¸.
+caseChatLine = $Create('div', 'caseChatLine', '');
+$id('chatwrap').appendChild(caseChatLine);
+caseChatLine.appendChild($id('chatline'));
+
+smileMenuShowing = false;
+smileMenuTimeout = null;
 
 function ShowHideSmileMenu(){
 	var FRAME = $id('smile-menu');
@@ -846,5 +853,3 @@ API_CLASSCLICKEVENTADD(function(TARGET, CLS){
 		$id('chatline').focus();
 	}
 });
-
-
