@@ -944,3 +944,7 @@ background: none;
     font-size: 0em;
 }
 #smiles-btn{cursor: pointer; position: absolute; font-size: 25px; right: 10px;}
+#smile-menu img {margin:5px; max-height:35px; cursor:pointer;}
+#smile-menu {
+background-color: black;
+}
