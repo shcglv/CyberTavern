@@ -795,5 +795,5 @@ API_PREFIXMESSAGE(function(data, last) {
 	}
 });
 
-$("#server-msg-reconnect").text($("#server-msg-reconnect").text().replace(/Connected?/,'Подключено'));
+.replace(/Connected?/,'Подключено'));
 
