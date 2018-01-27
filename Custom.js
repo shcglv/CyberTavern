@@ -795,5 +795,56 @@ API_PREFIXMESSAGE(function(data, last) {
 	}
 });
 
-.replace(/Connected?/,'Подключено'));
+function ShowHideSmileMenu(){
+	var FRAME = $id('smile-menu');
+	FRAME.style.display = 'block';
+	if (!smileMenuShowing) {
+		FRAME.style.width = $id('chatline').offsetWidth + 'px';
+		FRAME.style.top = $id('chatline').offsetTop - FRAME.offsetHeight +192 + 'px';
+		FRAME.style.height = "300px";
+		FRAME.style.opacity = '1';
+		smileMenuShowing = true;
+		clearTimeout(smileMenuTimeout);
+	}	else {
+		FRAME.style.opacity = '0';
+		smileMenuShowing = false;
+		smileMenuTimeout = setTimeout(function(){FRAME.style.display = 'none';}, 300);
+	}
+
+	$id('smile-menu').style.top = $id('chatline').offsetTop - $id('smile-menu').offsetHeight + 'px';
+};
+
+smilesBtn = $Create('div', 'smiles-btn', '');
+smilesBtn.innerHTML = '☺';
+smilesBtn.onclick = function(){
+	ShowHideSmileMenu();
+}
+caseChatLine.insertBefore(smilesBtn, $id('chatline'));
+
+API_ADDWELL('smile-menu', function(OBJ){
+	OBJ.style.display = 'none';
+	OBJ.style.opacity = '0';
+	OBJ.style.position = 'absolute';
+	OBJ.style.zIndex = '10';
+	OBJ.style.borderRadius = '0';
+	OBJ.style.border = 'none';
+	OBJ.style.overflow = 'auto';
+	OBJ.style.transitionDuration = '0.3s';
+	caseChatLine.insertBefore(OBJ, $id('chatline'));
+	for(var i = 0; i < CHANNEL.emotes.length; i++){
+		var TMP = $Add('img', 'smile-' + i, 'smile', 'smile-menu');
+		TMP.src = CHANNEL.emotes[i].image;
+		TMP.title = CHANNEL.emotes[i].name;
+	}
+});
+
+API_CLASSCLICKEVENTADD(function(TARGET, CLS){
+	if(CLS == 'smile'){
+		var smid = TARGET.target.id.replace('smile-','');
+		$id('chatline').value += CHANNEL.emotes[smid].name;
+		ShowHideSmileMenu();
+		$id('chatline').focus();
+	}
+});
+
 
