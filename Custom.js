@@ -741,11 +741,11 @@ function scrollerInit() {
 
 $("#maincontain").css({"right": "1px", "left":""});
 $("#chatwrap").css({"right": "", "left":"1px"});
-$("#usercount").text($("#usercount").text().replace(/users?/,'пользователей'));
+$("#usercount").text($("#usercount").text().replace(/connected users?/,'подключенных пользователей'));
 if (typeof(_connectedUsers) == 'undefined') { _connectedUsers = Callbacks.usercount; }
 Callbacks.usercount = function(data) {//currently for debugging purposes only. Doesn't do anything.
 	_connectedUsers(data);
-	$("#usercount").text($("#usercount").text().replace(/users?/,'пользователей'));
+	$("#usercount").text($("#usercount").text().replace(/connected users?/,'подключенных пользователей'));
 }
 
 API_PREFIXMESSAGE(function(data, last) {
