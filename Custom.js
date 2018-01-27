@@ -145,7 +145,7 @@ $(".nano").nanoScroller();
 //middle draggable handle
 $("#mainpage").append("<div id='mHandle-left' class='mHandle'></div> <div id='mHandle-right' class='mHandle'></div><div id='mHandle-mid' class='mHandle'></div>");
 $("body").prepend("<div id='dragoverlay'><div class='l'></div><div class='r'></div><div id='handleWidget'></div></div>");
-$("#mainpage").append("<style id='splitRatio' split='80'>@media (min-width: 992px) {#mainpage > .nano {width: 80%;} #chatwrap {width: 19.9%;}}</style>");
+$("#mainpage").append("<style id='splitRatio' split='80'>@media (min-width: 992px) {#mainpage > .nano {width: 75%;} #chatwrap {width: 24.9%;}}</style>");
 
 
 _timeVIDEBLU = {raw: 0, ofs: 0, paused: false};//Define time object for ss7's video time display plugin
