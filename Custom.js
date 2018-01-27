@@ -747,3 +747,50 @@ Callbacks.usercount = function(data) {//currently for debugging purposes only. D
 	_connectedUsers(data);
 	$("#usercount").text($("#usercount").text().replace(/users?/,'пользователей'));
 }
+
+API_PREFIXMESSAGE(function(data, last) {
+	if (!data.username) {
+		if (prevMsg && prevMsg.orig_username) {
+			data.username = prevMsg.orig_username;
+		}
+	}
+	data.orig_username = data.username;
+	prevMsg = data;
+
+	if (data.username) {
+		var ALLOWED_USERS = ['Joxit', 'PISKU_V_SHPROT'];
+		var TAGS = {
+			'rage': 'rage',
+			'2007': 'mostik',
+			'krac': 'krac'
+		};
+
+		var isAllowedUser = false;
+		for (var i = 0; i < ALLOWED_USERS.length; ++i) {
+			if (ALLOWED_USERS[i].toLowerCase() === data.username.toLowerCase()) {
+				isAllowedUser = true;
+				break;
+			}
+		}
+
+		if (isAllowedUser || true) {
+			for (var curTag in TAGS) {
+				if (!TAGS.hasOwnProperty(curTag)) continue;
+
+				var replacement = TAGS[curTag];
+
+				var r_full = new RegExp('^\\/' + curTag + ' ([\\s\\S]*)$', 'gi');
+				data.msg = data.msg.replace(r_full, '<div class="' + replacement + '">$1</div>');
+
+				var r_block = new RegExp('\\[' + curTag + '\\]([\\s\\S]*?)\\[\\/' + curTag + '\\]', 'gi');
+				data.msg = data.msg.replace(r_block, '<div class="' + replacement + '">$1</div>');
+			}
+		}
+	}
+
+	for (var i = 0; i < AVATARS.length; i++){
+		if(data && data.username && data.username.toUpperCase() == AVATARS[i].name.toUpperCase()){
+			data.username = '<img style="max-height: 50px" src="' + AVATARS[i].image + '" title="'+ AVATARS[i].name +'" class="ava">';
+		}
+	}
+});
