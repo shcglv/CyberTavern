@@ -89,7 +89,7 @@ $("#addedbyTEXT").after($("#usercount"));
 $("#morebtn").after("<ul class='dropdown-menu'><li id='mediarefreshli'></li><li><button></button></li><li id='modli'></li><li><button></button></li></ul>");
 $("#modli").append($("#modflair"));
 $("#headbottom").append($("#mediarefresh"));
-$("#mediarefresh").text("Reload Video Player");
+$("#mediarefresh").text("Перезагрузить плеер");
 $("#videoinfo").after($("#rightpane"));
 $("#rightpane").after($("#leftpane"));
 $("#rightpane-inner").prepend("<div id='mediabuttons'></div>");
