@@ -12,7 +12,7 @@ console.log("ranscript");
 
 	/**
 	 * Copyright Marc J. Schmidt. See the LICENSE file at the top-level
-	 * directory of this distribution and at
+	 * directoy of this distribution and at
 	 * https://github.com/marcj/css-element-queries/blob/master/LICENSE.
 	 */
 	!function(){this.ResizeSensor=function(e,t){function s(){this.q=[],this.add=function(e){this.q.push(e)};var e,t;this.call=function(){for(e=0,t=this.q.length;t>e;e++)this.q[e].call()}}function i(e,t){return e.currentStyle?e.currentStyle[t]:window.getComputedStyle?window.getComputedStyle(e,null).getPropertyValue(t):e.style[t]}function o(e,t){if(e.resizedAttached){if(e.resizedAttached)return void e.resizedAttached.add(t)}else e.resizedAttached=new s,e.resizedAttached.add(t);e.resizeSensor=document.createElement("div"),e.resizeSensor.className="resize-sensor";var o="position: absolute; left: 0; top: 0; right: 0; bottom: 0; overflow: scroll; z-index: -1; visibility: hidden;",n="position: absolute; left: 0; top: 0;";e.resizeSensor.style.cssText=o,e.resizeSensor.innerHTML='<div class="resize-sensor-expand" style="'+o+'"><div style="'+n+'"></div></div><div class="resize-sensor-shrink" style="'+o+'"><div style="'+n+' width: 200%; height: 200%"></div></div>',e.appendChild(e.resizeSensor),{fixed:1,absolute:1}[i(e,"position")]||(e.style.position="relative");var r,l,d=e.resizeSensor.childNodes[0],c=d.childNodes[0],h=e.resizeSensor.childNodes[1],a=(h.childNodes[0],function(){c.style.width=d.offsetWidth+10+"px",c.style.height=d.offsetHeight+10+"px",d.scrollLeft=d.scrollWidth,d.scrollTop=d.scrollHeight,h.scrollLeft=h.scrollWidth,h.scrollTop=h.scrollHeight,r=e.offsetWidth,l=e.offsetHeight});a();var f=function(){e.resizedAttached&&e.resizedAttached.call()},u=function(e,t,s){e.attachEvent?e.attachEvent("on"+t,s):e.addEventListener(t,s)},z=function(){(e.offsetWidth!=r||e.offsetHeight!=l)&&f(),a()};u(d,"scroll",z),u(h,"scroll",z)}var n=Object.prototype.toString.call(e),r="[object Array]"===n||"[object NodeList]"===n||"[object HTMLCollection]"===n||"undefined"!=typeof jQuery&&e instanceof jQuery||"undefined"!=typeof Elements&&e instanceof Elements;if(r)for(var l=0,d=e.length;d>l;l++)o(e[l],t);else o(e,t);this.detach=function(){if(r)for(var t=0,s=e.length;s>t;t++)ResizeSensor.detach(e[t]);else ResizeSensor.detach(e)}},this.ResizeSensor.detach=function(e){e.resizeSensor&&(e.removeChild(e.resizeSensor),delete e.resizeSensor,delete e.resizedAttached)}}();
@@ -741,11 +741,11 @@ function scrollerInit() {
 
 $("#maincontain").css({"right": "1px", "left":""});
 $("#chatwrap").css({"right": "", "left":"1px"});
-$("#usercount").text($("#usercount").text().replace(/connected users?/,'подключенных пользователей'));
-if (typeof(_connectedUsers) == 'undefined') { _connectedUsers = Callbacks.usercount; }
+$("#usercount").text($("#usercount").text().replace(/connected users?/,'пользователей подключено'));
+if (typeof(_fUsers) == 'undefined') { _connectedUsers = Callbacks.usercount; }
 Callbacks.usercount = function(data) {//currently for debugging purposes only. Doesn't do anything.
 	_connectedUsers(data);
-	$("#usercount").text($("#usercount").text().replace(/connected users?/,'подключенных пользователей'));
+	$("#usercount").text($("#usercount").text().replace(/connected users?/,'пользователей подключено'));
 }
 
 API_PREFIXMESSAGE(function(data, last) {
@@ -794,3 +794,6 @@ API_PREFIXMESSAGE(function(data, last) {
 		}
 	}
 });
+
+$("#server-msg-reconnect").text($("#server-msg-reconnect").text().replace(/Connected?/,'Подключено'));
+
