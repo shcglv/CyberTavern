@@ -110,8 +110,8 @@ $("#mediarefresh2").click(function() {
 $("#mediabuttons").append($("#showmediaurl"), $("#showcustomembed"), $("#showsearch"), $("#showplaylistmanager"));
 
 //playlist
-$("#motdrow").after("<div id='queuecontainer' class='section'><button id='pldropdown' data-toggle='dropdown' title='Playlist Options'></button><div class='textheader'><p id='upnext' class='sectionheader'>Up Next</p></div></div>");
-$("#queuecontainer").append($("#queue"));
+//$("#motdrow").after("<div id='queuecontainer' class='section'><button id='pldropdown' data-toggle='dropdown' title='Playlist Options'></button><div class='textheader'><p id='upnext' class='sectionheader'>Up Next</p></div></div>");
+//$("#queuecontainer").append($("#queue"));
 $("#upnext").append($("#plmeta"));
 $("#pldropdown").after("<ul id='ploptions' class='dropdown-menu' role='menu'></ul>");
 $("#ploptions").append($("#shuffleplaylist"), $("#clearplaylist"), $("#getplaylist"));
