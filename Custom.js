@@ -49,7 +49,8 @@ $("#main").after("<div id='videoinfo' class='section'></div>");//create box to c
 
 $("#videoinfo").append("<div class='textheader'></div><div id='videoinfohead'><span id='addedbyTEXT'>Queued by <span id='addedby'></span></span><div id='headbottom'><div id='headright'><div id='ss7time' title='--:--'>0:00</div><div id='videolength'></div><div id='progbar'></div></div></div></div><div id='videoopts'></div>");
 $(".navbar-brand").after($("#currenttitle")); //move video title below video player
-$("#headbottom").append("<button id='addmedia' title='Add Media' class='headbtn headbtnleft'></button>");
+$("#headbottom").append("<button id='addmedia' title='Добавить медиа' class='headbtn headbtnleft'></button>");
+$("#headbottom").text($("#headbottom").text().replace(/Add Media?/,'Добавить медиа'));
 $("#headbottom").append($("#newpollbtn"));
 $("#newpollbtn").addClass("headbtn headbtnleft");
 $("#headbottom").append("<button id='morebtn' title='More Actions' data-toggle='dropdown' class='headbtn headbtnleft'></button>");
